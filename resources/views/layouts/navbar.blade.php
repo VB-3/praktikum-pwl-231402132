@@ -1,4 +1,4 @@
-<div class="navbar bg-green-400">
+<div class="navbar bg-pink-400">
     <div class="navbar-start">
     </div>
     <div class="navbar-center">
