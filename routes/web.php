@@ -21,5 +21,6 @@ use Illuminate\Support\Facades\Route;
 //     ]);
 // });
 
-Route::get ('/', [TodoTaskController::class, 'index']);
-Route::post ('/', [TodoTaskController::class, 'tambah']);
+Route::get('/', [TodoTaskController::class, 'index']);
+Route::post('/', [TodoTaskController::class, 'store']);
+Route::delete('/{id}', [TodoTaskController::class, 'destroy']);

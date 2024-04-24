@@ -8,23 +8,23 @@ use Illuminate\Http\Request;
 
 class TodoTaskController extends Controller
 {
-    public function index ()
+    public function index()
     {
         $tasks = Task::all();
 
-        return view('home',[
+        return view('home', [
             'tasks' => $tasks,
-    ]);
-}
+        ]);
+    }
 
-    public function tambah(Request $request
-    ){
+    public function store(Request $request)
+    {
         $request->validate([
-            'task' => 'required|min:5',
+            'task' => 'required | min:5',
         ],
-        [ 'task.required' => 'Ketik yang benar kontol !',
-            'task.min'  =>'Bagus bagus kau bujang !',
-
+        [
+            'task.required' => 'Tugas harus diisi',
+            'task.min'      => 'Tugas minimal 5 karakter'
         ]);
 
         Task::create([
@@ -32,6 +32,13 @@ class TodoTaskController extends Controller
             'tanggal' => NOW(),
         ]);
 
-        return redirect ('/');
+        return redirect('/');
+    }
+
+    public function destroy(Request $request)
+    {
+        Task::destroy($request->id);
+
+        return redirect('/')->with('success', 'Tugas selesai, gg lu bang');
     }
 }

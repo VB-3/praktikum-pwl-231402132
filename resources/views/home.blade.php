@@ -1,6 +1,14 @@
+{{-- Memanggil file template agar section dapat digunakan --}}
 @extends('layouts.layout')
 
+{{-- section akan menggantikan tempat yield --}}
 @section('contect')
+    @if (session()->has('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+    @endif
+
+    </div>
     {{-- content --}}
     <div class="flex justify-center mt-10 flex-col gap-10">
         <form action="/" method="POST">
@@ -10,14 +18,15 @@
                 <div class="label">
                     <span class="label-text text-emerald-600">Task Baru</span>
                 </div>
-                <input name="task" placeholder="Type here" class="input input-bordered input-success w-full max-w-lg" />
+                <input name="task" type="text" placeholder="Type here"
+                    class="input input-bordered input-success w-full max-w-lg" />
                 @error('task')
-                <p class ="text-red-500">{{ $message }}</p>
-                @enderror
+                    <p class="text-red-500">{{ $message }}
+                    @enderror
                 <div class="label">
                 </div>
                 {{-- button add --}}
-                <button class="btn btn-success w-36 self-center">Tambahkan</button>
+                <button class="btn btn-success w-36 self-center">Add</button>
                 {{-- akhir button add --}}
             </label>
             {{-- akhir search bar --}}
@@ -44,16 +53,19 @@
                             <button class="btn btn-sm shadow-lg bg-yellow-500">Edit</button>
                         </div>
                         <div class="tooltip" data-tip="Selesai">
-                            <button class="btn btn-sm btn-success">Done</button>
+                            <form action="/{{ $task->id }}" method="post">
+                                @method('delete')
+                                @csrf
+                                <button class="btn btn-sm btn-success"
+                                    onclick="return confirm('Eceknya ini captcha')">Done</button>
+                            </form>
                         </div>
                     </div>
                 </div>
                 {{-- akhir task 1 --}}
             @endforeach
         </div>
-        {{-- akhir task --}}
-    </div>
-    {{-- akhir task --}}
+        {{-- akhir task --}}
     </div>
     {{-- akhir content --}}
 @endsection
